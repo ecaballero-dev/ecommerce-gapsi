@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, KeyboardEvent } from 'react';
 import Card from './components/Card';
 import { Loading } from './components/styled';
 
@@ -21,7 +21,7 @@ function App() {
   const [shoppingCart, setShoppingCart] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = async (e: KeyboardEvent) => {
+  const handleSearch = async (e: KeyboardEvent<HTMLInputElement>) => {
     // Handling search upon Enter key press in text field
     if (e.key === 'Enter') {
       setIsLoading(true);
@@ -75,8 +75,6 @@ function App() {
     });
     setIsLoading(false);
   };
-
-  console.log('sr', searchResult)
 
   const handleSelectItem = (item: Item) => {
     setShoppingCart((prevState) => [...prevState, item]);

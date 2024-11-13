@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, UIEvent, KeyboardEvent } from 'react';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
 import CardHeader from '@mui/material/CardHeader';
@@ -22,7 +22,7 @@ interface Props {
     };
     handleRestart: () => void;
     handleSearchInput: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleSearch: (key: KeyboardEvent) => void;
+    handleSearch: (key: KeyboardEvent<HTMLInputElement>) => void;
     handleSearchPage: () => void;
 }
 
@@ -31,10 +31,10 @@ export default function ItemsCard(props: Props) {
         props.handleSelectRemoveItem(item);
     };
 
-    const handleScrollList = (event: any) => {
-        if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
-            props.handleSearchPage();
-        }
+    const handleScrollList = (event: UIEvent<HTMLDivElement>) => {
+        const { scrollTop, scrollHeight, clientHeight } = (event.target as HTMLInputElement);
+        if (scrollHeight - scrollTop === clientHeight) props.handleSearchPage();
+        return;
     };
     return (
         <Card>
@@ -62,7 +62,7 @@ export default function ItemsCard(props: Props) {
                     label="Search"
                     variant="standard"
                     onChange={(e: ChangeEvent<HTMLInputElement>) => props.handleSearchInput(e)}
-                    onKeyDown={(e) => props.handleSearch(e)}
+                    onKeyDown={props.handleSearch}
                     value={props.searchInput.keyword}
                 />
                 <Grid2 container spacing={2}>
