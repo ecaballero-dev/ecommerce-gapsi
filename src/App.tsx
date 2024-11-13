@@ -6,7 +6,6 @@ import { Loading } from './components/styled';
 import { Item } from './types.d';
 import axios from 'axios';
 
-
 interface SearchProps {
   keyword: string;
   page: number;
@@ -14,7 +13,7 @@ interface SearchProps {
 
 function App() {
   const [searchInput, setSearchInput] = useState<SearchProps>({
-    keyword: 'macbook',
+    keyword: '',
     page: 1
   });
   const [searchResult, setSearchResult] = useState<Item[]>([]);
@@ -45,7 +44,7 @@ function App() {
   };
 
   const handleSearchPage = async () => {
-    // Handling search upon new page while scrolling
+    // Handling search upon new page while scrolling, adding a new page
     const newPage = searchInput.page + 1;
     setSearchInput({
       ...searchInput,
@@ -68,6 +67,7 @@ function App() {
       };
     }).filter((i: Item) => i.id && i.image && i.name && i.description && i.priceInfo.itemPrice);// Verifying that item has an ID
     setSearchResult((prevState) => {
+      // Making sure new data stays on bottom so user can keep scrolling down
       return [
         ...prevState,
         ...newData
@@ -82,6 +82,7 @@ function App() {
   };
 
   const handleRestartApp = () => {
+    // When user restarts app with button on top corner, it sets everything to initial state
     setSearchInput({
       keyword: '',
       page: 1
@@ -105,6 +106,9 @@ function App() {
           Loading new items...
         </Loading>
       )}
+      {/**
+       * Control Props
+      */}
       <Card
         result={searchResult}
         searchInput={searchInput}

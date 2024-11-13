@@ -11,7 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import { Item } from '../types.d';
 import { CardInnerContainer, ShoppingCartBox, ItemBox, ItemBorder, ItemContainer, ItemHeader, ItemName, ItemPrice, ItemDescription } from './styled';
 
-
 interface Props {
     result: Item[];
     handleSelectRemoveItem: (item: Item) => void;
