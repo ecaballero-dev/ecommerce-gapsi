@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Paper from '@mui/material/Paper';
+import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
 
 export const Loading = styled.div`
@@ -36,6 +37,26 @@ export const ShoppingCartBox = styled.div`
     display: flex;
     justify-content: center;
     align=items: center;
+`;
+
+export const ShoppingCartContainer = styled(Paper)`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+`;
+
+export const ShoppingCartIconChip = styled(Chip)`
+    position: absolute;
+    top: 3px;
+    right: 3px;
+`;
+
+export const ShoppingCartIcon = styled.i`
+    font-size: 50px;
 `;
 
 export const ItemBox = styled(Paper)`

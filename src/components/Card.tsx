@@ -6,10 +6,22 @@ import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Grid2 from '@mui/material/Grid2';
-import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import { Item } from '../types.d';
-import { CardInnerContainer, ShoppingCartBox, ItemBox, ItemBorder, ItemContainer, ItemHeader, ItemName, ItemPrice, ItemDescription } from './styled';
+import {
+    CardInnerContainer,
+    ShoppingCartBox,
+    ItemBox,
+    ItemBorder,
+    ItemContainer,
+    ItemHeader,
+    ItemName,
+    ItemPrice,
+    ItemDescription,
+    ShoppingCartContainer,
+    ShoppingCartIconChip,
+    ShoppingCartIcon
+} from './styled';
 
 interface Props {
     result: Item[];
@@ -32,29 +44,28 @@ export default function ItemsCard(props: Props) {
 
     const handleScrollList = (event: UIEvent<HTMLDivElement>) => {
         const { scrollTop, scrollHeight, clientHeight } = (event.target as HTMLInputElement);
+        // Checks if user is at bottom of page, handles new search page
         if (scrollHeight - scrollTop === clientHeight) props.handleSearchPage();
         return;
     };
     return (
         <Card>
         <CardHeader
-            avatar={
-            <img src="/public/logo.png" height={40}></img>
-            }
+            avatar={<img src="/public/logo.png" height={40}></img>}
             action={
-            <IconButton aria-label="restart" onClick={props.handleRestart}>
-                <i className="fa-solid fa-arrows-rotate"></i>
-            </IconButton>
+                <IconButton aria-label="restart" onClick={props.handleRestart}>
+                    <i className="fa-solid fa-arrows-rotate"></i>
+                </IconButton>
             }
             title="eCommerce GAPSI"
         />
         <CardContent>
             <CardInnerContainer onScroll={handleScrollList}>
                 <ShoppingCartBox>
-                    <Paper elevation={3} style={{position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: 120, height: 120 }}>
-                        <Chip label={props.shoppingCart?.length} style={{ position: 'absolute', top: 3, right: 3 }}/>
-                        <i className="fa-solid fa-cart-shopping" style={{ fontSize: 50 }}/> Productos aqui
-                    </Paper>
+                    <ShoppingCartContainer elevation={3}>
+                        <ShoppingCartIconChip label={props.shoppingCart?.length}/>
+                        <ShoppingCartIcon className="fa-solid fa-cart-shopping" /> Productos aqui
+                    </ShoppingCartContainer>
                 </ShoppingCartBox>
                 <TextField
                     id="search-input"
