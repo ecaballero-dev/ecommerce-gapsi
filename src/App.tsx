@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
 import Card from './components/Card';
 import { Loading } from './components/styled';
+import { mapData } from './utils/mapData';
 
 import { Item } from './types.d';
 import axios from 'axios';
@@ -30,15 +31,7 @@ function App() {
         }
       });
       // Mapping data to required fields
-      setSearchResult(response.data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items.map((i: Item) => {
-        return {
-          id: i.id,
-          name: i.name,
-          image: i.image,
-          priceInfo: i.priceInfo,
-          description: i.description
-        };
-      }).filter((i: Item) => i.id && i.image && i.name && i.description && i.priceInfo.itemPrice)); // Verifying that item has an ID
+      setSearchResult(mapData(response.data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items)); // Verifying that item has needed data
       setIsLoading(false);
     }
   };
@@ -57,15 +50,7 @@ function App() {
       }
     });
     // Mapping data to required fields
-    const newData = response.data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items.map((i: Item) => {
-      return {
-        id: i.id,
-        name: i.name,
-        image: i.image,
-        priceInfo: i.priceInfo,
-        description: i.description
-      };
-    }).filter((i: Item) => i.id && i.image && i.name && i.description && i.priceInfo.itemPrice);// Verifying that item has an ID
+    const newData = mapData(response.data.item?.props?.pageProps?.initialData?.searchResult?.itemStacks[0]?.items); // Verifying that item has needed data
     setSearchResult((prevState) => {
       // Making sure new data stays on bottom so user can keep scrolling down
       return [
@@ -77,6 +62,7 @@ function App() {
   };
 
   const handleSelectItem = (item: Item) => {
+    // When an item is selected, we add it to the shopping cart and remove it from the search list
     setShoppingCart((prevState) => [...prevState, item]);
     setSearchResult((prevState) => prevState.filter((i) => i.id !== item.id));
   };
